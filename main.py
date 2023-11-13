@@ -1,14 +1,14 @@
-'''
-    This file implements a command-line interface which uses the other modules
+"""
+    Module implements a command-line interface which uses the other modules
     to query specific bus predictions from the NextBus API
-'''
+"""
 
 from datetime import datetime
 from data_classes import Error
 from api_handler import ApiHandler
 
 class OUT:
-    "This is a class that handles user interactions to get specific predictions from the api"
+    """This is a class that handles user interactions to get specific predictions from the api"""
 
     # Below are strings used to describe different stages in the program flow"
     AGENCY_SELECTION = "agencies" # level 1, the user is selecting from a list of agencies
@@ -36,12 +36,15 @@ class OUT:
         self.begin()
 
     def begin(self):
-        "Function to display welcome message and then begin the script's flow"
-        print("\nWelcome to my script. It handles user input to make and interprete NextBus API calls to get bus predictions")
+        """Method to display welcome message and then begin the script's flow"""
+        print(
+            "\nWelcome to my script. It handles user input to make and interprete" +
+            "NextBus API calls to get bus predictions"
+        )
         self.handle_prompt_and_input()
 
     def handle_prompt_and_input(self):
-        "Function that handles main flow of the script"
+        """Method that handles main flow of the script"""
         user_input = self.get_number_input(self.get_prompt()) # display the appropriate
         # prompt and collect user input
         if user_input == -1:
@@ -59,7 +62,8 @@ class OUT:
             # selection that needs to be handled
             if user_input < self.max: # there is a maximum number of choices a
                 # user can select from, this needs to be enforced
-                if self.get_current_level() == self.PREDICTIONS_DISPLAY or len(self.error_message) > 0:
+                if self.get_current_level() == self.PREDICTIONS_DISPLAY or (
+                    len(self.error_message) > 0):
                     if user_input == 0:
                         # when displaying predictions, an input of 0 implies
                         # that the user opted to go back to the very first level
@@ -87,33 +91,44 @@ class OUT:
 
 
     def get_prompt(self):
-        '''
-            Function to provide appropriate prompt for user input
-            level_name is what category (e.g. Agencies or bus stops)
-            the user is making a selection for i.e. their current level
-            back_action is what will happen if the user inputs -1
-        '''
-        if len(self.error_message) > 0: # if there is was an error from the API call
-            return f"\nError!\n{self.error_message}\nPlease input 1 to refresh\nInput 0 to go back to the list of Agencies\nInput -1 to go back\nInput -2 to exit\n\n"
-        # if they are currently viewing predictions
-        if self.get_current_level() == self.PREDICTIONS_DISPLAY:
-            return f"\nPlease input 1 to refresh\nInput 0 to go back to the list of Agencies\nInput -1 to go back to the list of routes\nInput -2 to exit\n\n{self.display_predictions()}"
+        """
+        Method to provide appropriate prompt for user input
 
-        level_name = "agency"
-        back_action = "exit"
-        if self.get_current_level() == self.ROUTE_SELECTION:
-            level_name = "route"
-            back_action = "go back to the list of agencies"
-        elif self.get_current_level() == self.STOP_SELECTION:
-            level_name = "stop"
-            back_action = "go back to the list of routes"
-        return f"\nPlease input the number corresponding to the {level_name} you are interested in.\nInput -1 to {back_action}\nInput -2 to exit\n\n{self.get_options()}"
+        level_name is what category (e.g. Agencies or bus stops)
+        the user is making a selection for i.e. their current level
+        back_action is what will happen if the user inputs -1
+
+        Returns
+        -------
+        str
+            appropriate prompt
+        """
+        if len(self.error_message) > 0: # if there is was an error from the API call
+            prompt = f"\nError!\n{self.error_message}\nPlease input 1 to refresh\nInput 0 to go back to the list of Agencies\nInput -1 to go back\nInput -2 to exit\n\n"
+        # if they are currently viewing predictions
+        elif self.get_current_level() == self.PREDICTIONS_DISPLAY:
+            prompt = f"\nPlease input 1 to refresh\nInput 0 to go back to the list of Agencies\nInput -1 to go back to the list of routes\nInput -2 to exit\n\n{self.predictions_to_string()}"
+        else:
+            level_name = "agency"
+            back_action = "exit"
+            if self.get_current_level() == self.ROUTE_SELECTION:
+                level_name = "route"
+                back_action = "go back to the list of agencies"
+            elif self.get_current_level() == self.STOP_SELECTION:
+                level_name = "stop"
+                back_action = "go back to the list of routes"
+            prompt = f"\nPlease input the number corresponding to the {level_name} you are interested in.\nInput -1 to {back_action}\nInput -2 to exit\n\n{self.get_options()}"
+        return f"{prompt}\nInput your selection: "
 
     def get_options(self):
-        '''
-            Function that checks current level and returns a string list of 
-            available options appropriate to that level based on users previous selections
-        '''
+        """
+        Method to check current level
+            
+        Returns
+        -------
+        str
+            available options appropriate to current level based on users previous selections
+        """
         options = "" # available options to select from based on current level
         # and previous e.g. bus routes in a specific agency
         index = 0 # the number the user would input to represent a specific
@@ -136,11 +151,15 @@ class OUT:
 
         return options
 
-    def display_predictions(self):
-        '''
-            Function to gather prediction data for a specific stop into a multiline string
-            The data is displayed per direction served by the stop
-        '''
+    def predictions_to_string(self):
+        """
+        Function to gather prediction data for a specific stop into a multiline string
+
+        Returns
+        -------
+        str
+            prepared predictions
+        """
         now = datetime.now() # time the predictions were displayed (current time)
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         prediction_data = "\nNext Buses Available"
@@ -162,10 +181,19 @@ class OUT:
         return prediction_data
 
     def get_number_input(self, prompt):
-        '''
-            Function to properly collect user input without errors or crashing.
-            An input of -3 is returned if an input error is detected
-        '''
+        """
+        Function to safely collect user input without errors or crashing.
+
+        Parameters
+        ----------
+        prompt : str
+            input prompt to be shown to the user
+
+        Returns
+        -------
+        int
+            User input. A value of -3 is returned if an input error is detected
+        """
         try:
             user_input = int(input(prompt)) # display desired prompt and wait for user input
             return user_input if user_input > -3 else -3 # if the number is less than -2,
@@ -176,7 +204,7 @@ class OUT:
             # return this if the user enters a non-numeric value
 
     def go_back(self):
-        "Function to go back to previous level"
+        """Function to go back to previous level"""
         if self.get_current_level() != self.AGENCY_SELECTION: # check if user is not
             # still on the first level
             del self.selections[-1] # delete most recent selection (which was what
@@ -186,8 +214,9 @@ class OUT:
             self.close() # if the user is still on the first level, terminate the script
 
     def update_level(self):
-        "Function to make and process api call based on previous selections and the current level"
-
+        """
+            Function to make and process API call based on previous selections and the current level
+        """
         self.error_message = "" # clear error message each time before updating
 
         if self.get_current_level() != self.AGENCY_SELECTION:
@@ -203,7 +232,7 @@ class OUT:
         if self.get_current_level() == self.AGENCY_SELECTION:
             # get the list of available agencies and update the maximum number
             # of options to the number of available agencies
-            self.agencies = self.api_handler.getAgencies()
+            self.agencies = self.api_handler.get_agencies()
             if self.agencies is Error:
                 # if the api handler returned an error, set the error message and
                 # update the maximum number of options
@@ -259,17 +288,22 @@ class OUT:
             self.max = 2
 
     def close(self):
-        "Function to terminate the script"
+        """Function to terminate the script"""
         print("Thank you for using my script")
         quit() # terminate script
 
     def get_current_level(self):
-        '''
-            A method to return the title/tag of the current level in the script from
-            the number of selections the user has made
-            These constant values representing the current level will be used throughout
+        """
+        A method to return the title/tag of the current level in the script
+
+        This is based on the number of selections the user has made
+
+        Returns
+        -------
+        str
+            constant values representing the current level. These are used throughout
             script to identify the levels
-        '''
+        """
         self.level = len(self.selections)
         if self.level == 0:
             return self.AGENCY_SELECTION

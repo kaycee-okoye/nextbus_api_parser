@@ -1,7 +1,7 @@
-'''
-    This file contains the API handler class used in handling queries to
+"""
+    Module contains the API handler class used in handling queries to
     the NextBus API
-'''
+"""
 
 from xml.sax import make_parser
 from xml.sax.handler import feature_namespaces
@@ -9,22 +9,21 @@ from xml_handlers import AgencyListHandler, RouteListHandler
 from xml_handlers import RouteDetailsHandler, PredictionsHandler
 
 class ApiHandler:
-    '''
-        A class designed to query the API for specific data and
-        then parse the response using the appropriate XML handler.
-        After parsing the XML response, the required object(s) will be returned.
+    """
+    A class designed to query and parse the API for specific data.
 
-        Note that the parameters passed to the API are always Tags
-        e.g. if you want to pass a specific bus stop to the API, you'd pass
-        the tag associated with that bus stop to the API query.
-    '''
-    domain = 'https://retro.umoiq.com/service/publicXMLFeed?' # root url for all API calls
-    agencyListQuery = domain + 'command=agencyList' # API query string to get available agencies
-    routeListQuery = domain + 'command=routeList&a={}' # API query string to get routes associated
+    NOTE
+    The parameters passed to the API are always Tags e.g. if you want
+    to pass a specific bus stop to the API, you'd pass
+    the tag associated with that bus stop to the API query.
+    """
+    DOMAIN = 'https://retro.umoiq.com/service/publicXMLFeed?' # root url for all API calls
+    AGENCY_LIST_QUERY = DOMAIN + 'command=agencyList' # API query string to get available agencies
+    ROUTE_LIST_QUERY = DOMAIN + 'command=routeList&a={}' # API query string to get routes associated
     # with an agency
-    routeDetailsQuery = domain +  'command=routeConfig&a={}&r={}' # API query string to get details
-    # about route e.g. stops
-    predictionQuery = domain + 'command=predictions&a={}&r={}&s={}' # API query string to get
+    ROUTE_DETAILS_QUERY = DOMAIN +  'command=routeConfig&a={}&r={}' # API query string to get
+    # details about route e.g. stops
+    PREDICTIONS_QUERY = DOMAIN + 'command=predictions&a={}&r={}&s={}' # API query string to get
     # predictions for a specific bus stop
 
     def __init__(self):
@@ -33,36 +32,85 @@ class ApiHandler:
         self.parser.setFeature(feature_namespaces, 0)
 
     def get_agencies(self):
-        "Make API call to get a list of available agencies"
+        """
+        Method to make an API call to get a list of available agencies
+
+        Returns
+        -------
+        list[Agency]
+            Available agencies
+        """
         handler = AgencyListHandler()
-        query = self.agencyListQuery
+        query = self.AGENCY_LIST_QUERY
         self.parser.setContentHandler(handler)
         self.parser.parse(query)
         # if an error was flagged, return the error instead
         return handler.agencies if (handler.error is None) else handler.error
 
-    def get_routes(self, agency):
-        "Make API call to get a list of routes associated with an agency"
+    def get_routes(self, agency_tag):
+        """
+        Method to make an API call to get a list of routes associated with an agency
+
+        Parameters
+        ----------
+        agency_tag : str
+            NextBus API tag of the agency being queried
+
+        Returns
+        -------
+        list[Route]
+            Routes associated with the agency
+        """
         handler = RouteListHandler()
-        query = self.routeListQuery.format(agency)
+        query = self.ROUTE_LIST_QUERY.format(agency_tag)
         self.parser.setContentHandler(handler)
         self.parser.parse(query)
         # if an error was flagged, return the error instead
         return handler.routes if (handler.error is None) else handler.error
 
-    def get_route_details(self, agency, route):
-        "Make API call to get a detailed description of a specific route"
+    def get_route_details(self, agency_tag, route_tag):
+        """
+        Method to make an API call to get a detailed description of a specific route
+
+        Parameters
+        ----------
+        agency_tag : str
+            NextBus API tag of the agency being queried
+        route_tag : str
+            NextBus API tag of the route being queried
+
+        Returns
+        -------
+        Route
+            Detailed description of the queried route
+        """
         handler = RouteDetailsHandler()
-        query = self.routeDetailsQuery.format(agency, route)
+        query = self.ROUTE_DETAILS_QUERY.format(agency_tag, route_tag)
         self.parser.setContentHandler(handler)
         self.parser.parse(query)
         # if an error was flagged, return the error instead
         return handler.route if (handler.error is None) else handler.error
 
-    def get_predictions(self, agency, route, stop):
-        "Make API call to get bus predictions for a specific bus stop associated with a route"
+    def get_predictions(self, agency_tag, route_tag, stop_tag):
+        """
+        Method to make an API call to get bus predictions for a specific stop on a route
+
+        Parameters
+        ----------
+        agency_tag : str
+            NextBus API tag of the agency being queried
+        route_tag : str
+            NextBus API tag of the route being queried
+        stop_tag : str
+            NextBus API tag of the stop being queried
+
+        Returns
+        -------
+        Predictions
+            Header data and a list of bus predictions at a bus stop from the API
+        """
         handler = PredictionsHandler()
-        query = self.predictionQuery.format(agency, route, stop)
+        query = self.PREDICTIONS_QUERY.format(agency_tag, route_tag, stop_tag)
         self.parser.setContentHandler(handler)
         self.parser.parse(query)
         # if an error was flagged, return the error instead
