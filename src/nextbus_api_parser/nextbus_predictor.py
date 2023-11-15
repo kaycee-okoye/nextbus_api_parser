@@ -4,10 +4,10 @@
 """
 
 from datetime import datetime
-from data_classes import Error
-from api_handler import ApiHandler
+from nextbus_api_parser.api_handler import ApiHandler
+from nextbus_api_parser.data_classes import Error
 
-class OUT:
+class NextBusPredictor:
     """Class that handles user interactions to get specific predictions from the api"""
 
     # Below are strings used to describe different stages in the program flow"
@@ -313,4 +313,4 @@ class OUT:
             return self.STOP_SELECTION
         elif self.level == 3:
             return self.PREDICTIONS_DISPLAY
-OUT()
+NextBusPredictor()

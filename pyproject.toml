@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nextbus_api_parser"
+version = "0.0.1"
+authors = [
+  { name="Kenechukwu Okoye", email="apps.oak.tech@gmail.com" },
+]
+description = "A simple and efficient package for interacting with the NextBus API"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/kaycee-okoye/nextbus_api_parser"
+"Bug Tracker" = "https://github.com/kaycee-okoye/nextbus_api_parser/issues"

@@ -5,8 +5,13 @@
 
 from xml.sax import make_parser
 from xml.sax.handler import feature_namespaces
-from xml_handlers import AgencyListHandler, RouteListHandler
-from xml_handlers import RouteDetailsHandler, PredictionsHandler
+from nextbus_api_parser.xml_handlers import (
+    AgencyListHandler,
+    RouteListHandler,
+    RouteDetailsHandler,
+    PredictionsHandler,
+)
+
 
 class ApiHandler:
     """
@@ -17,13 +22,24 @@ class ApiHandler:
     to pass a specific bus stop to the API, you'd pass
     the tag associated with that bus stop to the API query.
     """
-    DOMAIN = 'https://retro.umoiq.com/service/publicXMLFeed?' # root url for all API calls
-    AGENCY_LIST_QUERY = DOMAIN + 'command=agencyList' # API query string to get available agencies
-    ROUTE_LIST_QUERY = DOMAIN + 'command=routeList&a={}' # API query string to get routes associated
+
+    DOMAIN = (
+        "https://retro.umoiq.com/service/publicXMLFeed?"  # root url for all API calls
+    )
+    AGENCY_LIST_QUERY = (
+        DOMAIN + "command=agencyList"
+    )  # API query string to get available agencies
+    ROUTE_LIST_QUERY = (
+        DOMAIN + "command=routeList&a={}"
+    )  # API query string to get routes associated
     # with an agency
-    ROUTE_DETAILS_QUERY = DOMAIN +  'command=routeConfig&a={}&r={}' # API query string to get
+    ROUTE_DETAILS_QUERY = (
+        DOMAIN + "command=routeConfig&a={}&r={}"
+    )  # API query string to get
     # details about route e.g. stops
-    PREDICTIONS_QUERY = DOMAIN + 'command=predictions&a={}&r={}&s={}' # API query string to get
+    PREDICTIONS_QUERY = (
+        DOMAIN + "command=predictions&a={}&r={}&s={}"
+    )  # API query string to get
     # predictions for a specific bus stop
 
     def __init__(self):

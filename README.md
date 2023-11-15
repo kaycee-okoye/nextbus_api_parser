@@ -1,14 +1,14 @@
 # NextBus API Python Parser
 
-This Python project provides a simple and efficient way to interact with the NextBus API, which offers information on bus agencies, bus routes, bus stops, bus paths, and bus predictions in the United States. The repository includes four essential files:
+This Python package provides a simple and efficient way to interact with the NextBus API, which offers information on bus agencies, bus routes, bus stops, bus paths, and bus predictions in the United States. The repository includes four essential files:
 
 1. `api_handler.py`: This module acts as a controller for making API calls to the NextBus API. It also handles the parsing of API responses into appropriate model classes.
 
-2. `data_classes.py`: This file contains the model data classes used to represent and handle data parsed from the NextBus API. These classes help structure the data for easier manipulation and usage within your applications.
+2. `data_classes.py`: This module contains the model data classes used to represent and handle data parsed from the NextBus API. These classes help structure the data for easier manipulation and usage within your applications.
 
 3. `xml_handler.py`: The XML handler module includes classes that inherit from `xml.sax.ContentHandler`. These classes are responsible for parsing XML feeds from the NextBus API and transforming the data into the corresponding model classes.
 
-4. `main.py`: The main module implements a command-line interface (CLI) for requesting and displaying bus predictions for a selected bus stop along a selected route within a chosen bus agency. This module serves as a practical example of how to use the other components to interact with the NextBus API.
+4. `nextbus_predictor.py`: This module implements a command-line interface (CLI) for requesting and displaying bus predictions for a selected bus stop along a selected route within a chosen bus agency. This module serves as a practical example of how to use the other components to interact with the NextBus API.
 
 API documentation: https://retro.umoiq.com/xmlFeedDocs/NextBusXMLFeed.pdf
 
@@ -16,30 +16,26 @@ API documentation: https://retro.umoiq.com/xmlFeedDocs/NextBusXMLFeed.pdf
 
 To get started with this project, follow these steps:
 
-1. Clone the repository to your local machine:
+1. Install the package to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/nextbus-api-parser.git
-   cd nextbus-api-parser
+   pip install --upgrade pip
+   pip install https://github.com/kaycee-okoye/nextbus_api_parser
    ```
 
 2. You can now use the provided command-line interface (CLI) to interact with the NextBus API and retrieve bus predictions.
 
 ## Usage
 
-The `main.py` script provides a user-friendly CLI for interacting with the NextBus API. Here's how to use it:
+The `nextbus_predictor.py` script provides a user-friendly CLI for interacting with the NextBus API. Here's how to use it:
 
 ```bash
-python main.py
+python nextbus_predictor.py # you might need to provide the absolute path to this file
 ```
 
 Follow the prompts to select a bus agency, route, and bus stop. The script will then fetch and display bus predictions for the chosen stop along the selected route.
 
 ## Example
-
-```bash
-python main.py
-```
 
 ```
 Welcome to the NextBus API Python Parser CLI!

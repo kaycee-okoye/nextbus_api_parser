@@ -4,7 +4,7 @@
 """
 
 from xml.sax import ContentHandler
-from data_classes import Agency, Error, Predictions, Route
+from nextbus_api_parser.data_classes import Agency, Error, Predictions, Route
 
 
 class AgencyListHandler(ContentHandler):
