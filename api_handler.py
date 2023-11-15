@@ -10,7 +10,7 @@ from xml_handlers import RouteDetailsHandler, PredictionsHandler
 
 class ApiHandler:
     """
-    A class designed to query and parse the API for specific data.
+    Class designed to query and parse the API for specific data.
 
     NOTE
     The parameters passed to the API are always Tags e.g. if you want

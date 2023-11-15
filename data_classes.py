@@ -53,7 +53,7 @@ class Route:
 
     def add_stop(self, attributes, add_to_direction = False):
         """
-        A method to add a stop to a route
+        Method to add a stop to a route
 
         Parameters
         ----------
@@ -72,7 +72,7 @@ class Route:
 
     def add_direction(self, attributes):
         """
-        A method to add a direction to the list of directions associated with this route
+        Method to add a direction to the list of directions associated with this route
 
         Parameters
         ----------
@@ -83,7 +83,7 @@ class Route:
 
     def add_path(self, attributes):
         """
-        A method to add a path to the list of directions associated with this route
+        Method to add a path to the list of directions associated with this route
 
         Parameters
         ----------
@@ -94,7 +94,7 @@ class Route:
 
     def add_point(self, attributes):
         """
-        A method to add a point specifically to the last path that was added to this route. 
+        Method to add a point specifically to the last path that was added to this route. 
         This is because of the structure of the XML tree
 
         Parameters
@@ -174,7 +174,7 @@ class Path:
 
 class Point:
     """
-    This is a class that stores the data of a specific geographical cordinate in the API
+    Data class that stores the data of a specific geographical cordinate in the API
 
     Parameters
     ----------

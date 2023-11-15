@@ -8,7 +8,7 @@ from data_classes import Error
 from api_handler import ApiHandler
 
 class OUT:
-    """This is a class that handles user interactions to get specific predictions from the api"""
+    """Class that handles user interactions to get specific predictions from the api"""
 
     # Below are strings used to describe different stages in the program flow"
     AGENCY_SELECTION = "agencies" # level 1, the user is selecting from a list of agencies
@@ -153,7 +153,7 @@ class OUT:
 
     def predictions_to_string(self):
         """
-        Function to gather prediction data for a specific stop into a multiline string
+        Method to gather prediction data for a specific stop into a multiline string
 
         Returns
         -------
@@ -182,7 +182,7 @@ class OUT:
 
     def get_number_input(self, prompt):
         """
-        Function to safely collect user input without errors or crashing.
+        Method to safely collect user input without errors or crashing.
 
         Parameters
         ----------
@@ -204,7 +204,7 @@ class OUT:
             # return this if the user enters a non-numeric value
 
     def go_back(self):
-        """Function to go back to previous level"""
+        """Method to go back to previous level"""
         if self.get_current_level() != self.AGENCY_SELECTION: # check if user is not
             # still on the first level
             del self.selections[-1] # delete most recent selection (which was what
@@ -215,7 +215,7 @@ class OUT:
 
     def update_level(self):
         """
-            Function to make and process API call based on previous selections and the current level
+            Method to make and process API call based on previous selections and the current level
         """
         self.error_message = "" # clear error message each time before updating
 
@@ -288,13 +288,13 @@ class OUT:
             self.max = 2
 
     def close(self):
-        """Function to terminate the script"""
+        """Method to terminate the script"""
         print("Thank you for using my script")
         quit() # terminate script
 
     def get_current_level(self):
         """
-        A method to return the title/tag of the current level in the script
+        Method to get the title/tag of the current level in the script
 
         This is based on the number of selections the user has made
 

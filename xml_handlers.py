@@ -8,7 +8,7 @@ from data_classes import Agency, Error, Predictions, Route
 
 
 class AgencyListHandler(ContentHandler):
-    """A class to parse XML data for a list of Agencies from the API"""
+    """Class to parse XML data for a list of Agencies from the API"""
     def __init__(self):
         self.agencies = []
         self.error = None
@@ -45,7 +45,7 @@ class AgencyListHandler(ContentHandler):
             self.error.set_message(content)
 
 class RouteListHandler(ContentHandler):
-    """A class to parse XML data for a list of an Agency's Routes from the API"""
+    """Class to parse XML data for a list of an Agency's Routes from the API"""
     def __init__(self):
         self.routes = []
         self.error = None
@@ -82,7 +82,7 @@ class RouteListHandler(ContentHandler):
             self.error.set_message(content)
 
 class RouteDetailsHandler(ContentHandler):
-    """A class to parse XML data for a detailed description of a Route from the API"""
+    """Class to parse XML data for a detailed description of a Route from the API"""
 
     def __init__(self):
         # this boolean indicates whether the tree has reached the part where it's listing Directions
@@ -140,7 +140,7 @@ class RouteDetailsHandler(ContentHandler):
             self.error.set_message(content)
 
 class PredictionsHandler(ContentHandler):
-    """A class to parse XML data for a list of a Stop's Predictions from the API"""
+    """Class to parse XML data for a list of a Stop's Predictions from the API"""
     def __init__(self):
         self.error = None
         self.predictions = None
