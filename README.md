@@ -20,7 +20,7 @@ To get started with this project, follow these steps:
 
    ```bash
    pip install --upgrade pip
-   pip install https://github.com/kaycee-okoye/nextbus_api_parser
+   pip install https://github.com/kaycee-okoye/nextbus_api_parser.git
    ```
 
 2. You can now use the provided command-line interface (CLI) to interact with the NextBus API and retrieve bus predictions.
