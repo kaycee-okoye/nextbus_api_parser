@@ -76,11 +76,11 @@ Thank you for using the NextBus API Python Parser CLI!
 
 # Contributions Guidelines
 
-Please read CONTRIBUTING.md for details on the author's code of conduct, and contribution guidelines.
+Please read [Contribution Guidelines](CONTRIBUTING.md) for details on the author's code of conduct, and contribution guidelines.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
 
 ## Acknowledgments
 
